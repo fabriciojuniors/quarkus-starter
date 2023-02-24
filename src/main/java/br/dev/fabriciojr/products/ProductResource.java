@@ -14,15 +14,16 @@ public class ProductResource {
     private ProductRepository repository;
 
     @GET
-    public Collection<Product> findAll(){
-        return repository.listAll();
+    public Collection<ProductDto> findAll(){
+        return ProductDto.Builder.create().toRepresentation(repository.listAll());
     }
 
     @POST
     @Transactional
-    public Product save(Product product){
+    public ProductDto save(ProductDto dto){
+        final Product product = ProductDto.Builder.create().fromRepresentation(dto);
         repository.persist(product);
-        return product;
+        return ProductDto.Builder.create().toRepresentation(product);
     }
 
 }

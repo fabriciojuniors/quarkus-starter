@@ -1,6 +1,6 @@
 package br.dev.fabriciojr.products;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import br.dev.fabriciojr.builder.AbstractBuilder;
 
 import javax.persistence.*;
 
@@ -36,5 +36,30 @@ public class Product {
 
     public Long getId() {
         return id;
+    }
+
+    public static class Builder extends AbstractBuilder<Product> {
+
+        private Builder(Product entity) {
+            super(entity);
+        }
+
+        public static Builder create() {
+            return new Builder(new Product());
+        }
+
+        public static Builder from(Product product) {
+            return new Builder(product);
+        }
+
+        public Builder name(final String name) {
+            entity.name = name;
+            return this;
+        }
+
+        public Builder category(final String category) {
+            entity.category = category;
+            return this;
+        }
     }
 }
